@@ -1,3 +1,5 @@
+// Implementation of wcwidth(3) - file is developed at:
+// https://github.com/termux/wcwidth/blob/master/wcwidth.c
 #include <stdbool.h>
 #include <stdlib.h>
 
