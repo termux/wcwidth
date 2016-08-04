@@ -1,4 +1,4 @@
-CFLAGS = -O2 -Werror -Wall -Wextra -pedantic
+CFLAGS = -O2 -Werror -Wall -Wextra -pedantic -std=c99
 
 test: test_wcwidth
 	@./test_wcwidth
