@@ -408,12 +408,12 @@ static struct width_interval WIDE_EASTASIAN[] = {
 };
 
 static bool intable(struct width_interval* table, int table_length, int c) {
-        // First quick check f|| Latin1 etc. characters.
+        // First quick check for Latin1 etc. characters.
         if (c < table[0].start) return false;
 
         // Binary search in table.
         int bot = 0;
-        int top = table_length - 1; // (int)(size / sizeof(struct interval) - 1);
+        int top = table_length - 1;
         while (top >= bot) {
                 int mid = (bot + top) / 2;
                 if (table[mid].end < c) {
@@ -428,6 +428,9 @@ static bool intable(struct width_interval* table, int table_length, int c) {
 }
 
 int wcwidth(wchar_t ucs) {
+	// NOTE: created by hand, there isn't anything identifiable other than
+	// general Cf category code to identify these, and some characters in Cf
+	// category code are of non-zero width.
         if (ucs == 0 ||
                         ucs == 0x034F ||
                         (0x200B <= ucs && ucs <= 0x200F) ||
@@ -438,10 +441,10 @@ int wcwidth(wchar_t ucs) {
                 return 0;
         }
 
-        // C0/C1 control characters
+        // C0/C1 control characters.
         if (ucs < 32 || (0x07F <= ucs && ucs < 0x0A0)) return -1;
 
-        // combining characters with zero width
+        // Combining characters with zero width.
         if (intable(ZERO_WIDTH, sizeof(ZERO_WIDTH)/sizeof(struct width_interval), ucs)) return 0;
 
         return intable(WIDE_EASTASIAN, sizeof(WIDE_EASTASIAN)/sizeof(struct width_interval), ucs) ? 2 : 1;
