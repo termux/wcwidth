@@ -1,5 +1,14 @@
-// Implementation of wcwidth(3) - file is developed at:
-// https://github.com/termux/wcwidth/blob/master/wcwidth.c
+/*
+ * Copyright (C) Fredrik Fornwall 2016.
+ * Distributed under the MIT License.
+ *
+ * Implementation of wcwidth(3) as a C port of:
+ * https://github.com/jquast/wcwidth
+ *
+ * Report issues at:
+ * https://github.com/termux/wcwidth
+ */
+
 #include <stdbool.h>
 #include <stdlib.h>
 
