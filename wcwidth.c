@@ -18,7 +18,7 @@ struct width_interval {
 };
 
 // From https://github.com/jquast/wcwidth/blob/master/wcwidth/table_zero.py
-// at commit 0d7de112202cc8b2ebe9232ff4a5c954f19d561a (2016-07-02):
+// at commit 15efb1f02ba50f79f8905b9ef25fa9c50068b7b1 (2020-03-23):
 static struct width_interval ZERO_WIDTH[] = {
         {0x0300, 0x036f},  // Combining Grave Accent  ..Combining Latin Small Le
         {0x0483, 0x0489},  // Combining Cyrillic Titlo..Combining Cyrillic Milli
@@ -37,13 +37,14 @@ static struct width_interval ZERO_WIDTH[] = {
         {0x0711, 0x0711},  // Syriac Letter Superscrip..Syriac Letter Superscrip
         {0x0730, 0x074a},  // Syriac Pthaha Above     ..Syriac Barrekh
         {0x07a6, 0x07b0},  // Thaana Abafili          ..Thaana Sukun
-        {0x07eb, 0x07f3},  // Nko Combining Sh||t High..Nko Combining Double Dot
+        {0x07eb, 0x07f3},  // Nko Combining Short High..Nko Combining Double Dot
+        {0x07fd, 0x07fd},  // Nko Dantayalan          ..Nko Dantayalan
         {0x0816, 0x0819},  // Samaritan Mark In       ..Samaritan Mark Dagesh
         {0x081b, 0x0823},  // Samaritan Mark Epentheti..Samaritan Vowel Sign A
         {0x0825, 0x0827},  // Samaritan Vowel Sign Sho..Samaritan Vowel Sign U
         {0x0829, 0x082d},  // Samaritan Vowel Sign Lon..Samaritan Mark Nequdaa
         {0x0859, 0x085b},  // Mandaic Affrication Mark..Mandaic Gemination Mark
-        {0x08d4, 0x08e1},  // (nil)                   ..
+        {0x08d3, 0x08e1},  // Arabic Small Low Waw    ..Arabic Small High Sign S
         {0x08e3, 0x0902},  // Arabic Turned Damma Belo..Devanagari Sign Anusvara
         {0x093a, 0x093a},  // Devanagari Vowel Sign Oe..Devanagari Vowel Sign Oe
         {0x093c, 0x093c},  // Devanagari Sign Nukta   ..Devanagari Sign Nukta
@@ -56,6 +57,7 @@ static struct width_interval ZERO_WIDTH[] = {
         {0x09c1, 0x09c4},  // Bengali Vowel Sign U    ..Bengali Vowel Sign Vocal
         {0x09cd, 0x09cd},  // Bengali Sign Virama     ..Bengali Sign Virama
         {0x09e2, 0x09e3},  // Bengali Vowel Sign Vocal..Bengali Vowel Sign Vocal
+        {0x09fe, 0x09fe},  // Bengali Sandhi Mark     ..Bengali Sandhi Mark
         {0x0a01, 0x0a02},  // Gurmukhi Sign Adak Bindi..Gurmukhi Sign Bindi
         {0x0a3c, 0x0a3c},  // Gurmukhi Sign Nukta     ..Gurmukhi Sign Nukta
         {0x0a41, 0x0a42},  // Gurmukhi Vowel Sign U   ..Gurmukhi Vowel Sign Uu
@@ -70,17 +72,19 @@ static struct width_interval ZERO_WIDTH[] = {
         {0x0ac7, 0x0ac8},  // Gujarati Vowel Sign E   ..Gujarati Vowel Sign Ai
         {0x0acd, 0x0acd},  // Gujarati Sign Virama    ..Gujarati Sign Virama
         {0x0ae2, 0x0ae3},  // Gujarati Vowel Sign Voca..Gujarati Vowel Sign Voca
-        {0x0b01, 0x0b01},  // ||iya Sign Candrabindu  ..||iya Sign Candrabindu
-        {0x0b3c, 0x0b3c},  // ||iya Sign Nukta        ..||iya Sign Nukta
-        {0x0b3f, 0x0b3f},  // ||iya Vowel Sign I      ..||iya Vowel Sign I
-        {0x0b41, 0x0b44},  // ||iya Vowel Sign U      ..||iya Vowel Sign Vocalic
-        {0x0b4d, 0x0b4d},  // ||iya Sign Virama       ..||iya Sign Virama
-        {0x0b56, 0x0b56},  // ||iya Ai Length Mark    ..||iya Ai Length Mark
-        {0x0b62, 0x0b63},  // ||iya Vowel Sign Vocalic..||iya Vowel Sign Vocalic
+        {0x0afa, 0x0aff},  // Gujarati Sign Sukun     ..Gujarati Sign Two-circle
+        {0x0b01, 0x0b01},  // Oriya Sign Candrabindu  ..Oriya Sign Candrabindu
+        {0x0b3c, 0x0b3c},  // Oriya Sign Nukta        ..Oriya Sign Nukta
+        {0x0b3f, 0x0b3f},  // Oriya Vowel Sign I      ..Oriya Vowel Sign I
+        {0x0b41, 0x0b44},  // Oriya Vowel Sign U      ..Oriya Vowel Sign Vocalic
+        {0x0b4d, 0x0b4d},  // Oriya Sign Virama       ..Oriya Sign Virama
+        {0x0b55, 0x0b56},  // (nil)                   ..Oriya Ai Length Mark
+        {0x0b62, 0x0b63},  // Oriya Vowel Sign Vocalic..Oriya Vowel Sign Vocalic
         {0x0b82, 0x0b82},  // Tamil Sign Anusvara     ..Tamil Sign Anusvara
         {0x0bc0, 0x0bc0},  // Tamil Vowel Sign Ii     ..Tamil Vowel Sign Ii
         {0x0bcd, 0x0bcd},  // Tamil Sign Virama       ..Tamil Sign Virama
         {0x0c00, 0x0c00},  // Telugu Sign Combining Ca..Telugu Sign Combining Ca
+        {0x0c04, 0x0c04},  // Telugu Sign Combining An..Telugu Sign Combining An
         {0x0c3e, 0x0c40},  // Telugu Vowel Sign Aa    ..Telugu Vowel Sign Ii
         {0x0c46, 0x0c48},  // Telugu Vowel Sign E     ..Telugu Vowel Sign Ai
         {0x0c4a, 0x0c4d},  // Telugu Vowel Sign O     ..Telugu Sign Virama
@@ -92,10 +96,12 @@ static struct width_interval ZERO_WIDTH[] = {
         {0x0cc6, 0x0cc6},  // Kannada Vowel Sign E    ..Kannada Vowel Sign E
         {0x0ccc, 0x0ccd},  // Kannada Vowel Sign Au   ..Kannada Sign Virama
         {0x0ce2, 0x0ce3},  // Kannada Vowel Sign Vocal..Kannada Vowel Sign Vocal
-        {0x0d01, 0x0d01},  // Malayalam Sign Candrabin..Malayalam Sign Candrabin
+        {0x0d00, 0x0d01},  // Malayalam Sign Combining..Malayalam Sign Candrabin
+        {0x0d3b, 0x0d3c},  // Malayalam Sign Vertical ..Malayalam Sign Circular
         {0x0d41, 0x0d44},  // Malayalam Vowel Sign U  ..Malayalam Vowel Sign Voc
         {0x0d4d, 0x0d4d},  // Malayalam Sign Virama   ..Malayalam Sign Virama
         {0x0d62, 0x0d63},  // Malayalam Vowel Sign Voc..Malayalam Vowel Sign Voc
+        {0x0d81, 0x0d81},  // (nil)                   ..
         {0x0dca, 0x0dca},  // Sinhala Sign Al-lakuna  ..Sinhala Sign Al-lakuna
         {0x0dd2, 0x0dd4},  // Sinhala Vowel Sign Ketti..Sinhala Vowel Sign Ketti
         {0x0dd6, 0x0dd6},  // Sinhala Vowel Sign Diga ..Sinhala Vowel Sign Diga
@@ -103,8 +109,7 @@ static struct width_interval ZERO_WIDTH[] = {
         {0x0e34, 0x0e3a},  // Thai Character Sara I   ..Thai Character Phinthu
         {0x0e47, 0x0e4e},  // Thai Character Maitaikhu..Thai Character Yamakkan
         {0x0eb1, 0x0eb1},  // Lao Vowel Sign Mai Kan  ..Lao Vowel Sign Mai Kan
-        {0x0eb4, 0x0eb9},  // Lao Vowel Sign I        ..Lao Vowel Sign Uu
-        {0x0ebb, 0x0ebc},  // Lao Vowel Sign Mai Kon  ..Lao Semivowel Sign Lo
+        {0x0eb4, 0x0ebc},  // Lao Vowel Sign I        ..Lao Semivowel Sign Lo
         {0x0ec8, 0x0ecd},  // Lao Tone Mai Ek         ..Lao Niggahita
         {0x0f18, 0x0f19},  // Tibetan Astrological Sig..Tibetan Astrological Sig
         {0x0f35, 0x0f35},  // Tibetan Mark Ngas Bzung ..Tibetan Mark Ngas Bzung
@@ -153,7 +158,7 @@ static struct width_interval ZERO_WIDTH[] = {
         {0x1a65, 0x1a6c},  // Tai Tham Vowel Sign I   ..Tai Tham Vowel Sign Oa B
         {0x1a73, 0x1a7c},  // Tai Tham Vowel Sign Oa A..Tai Tham Sign Khuen-lue
         {0x1a7f, 0x1a7f},  // Tai Tham Combining Crypt..Tai Tham Combining Crypt
-        {0x1ab0, 0x1abe},  // Combining Doubled Circum..Combining Parentheses Ov
+        {0x1ab0, 0x1ac0},  // Combining Doubled Circum..
         {0x1b00, 0x1b03},  // Balinese Sign Ulu Ricem ..Balinese Sign Surang
         {0x1b34, 0x1b34},  // Balinese Sign Rerekan   ..Balinese Sign Rerekan
         {0x1b36, 0x1b3a},  // Balinese Vowel Sign Ulu ..Balinese Vowel Sign Ra R
@@ -167,7 +172,7 @@ static struct width_interval ZERO_WIDTH[] = {
         {0x1be6, 0x1be6},  // Batak Sign Tompi        ..Batak Sign Tompi
         {0x1be8, 0x1be9},  // Batak Vowel Sign Pakpak ..Batak Vowel Sign Ee
         {0x1bed, 0x1bed},  // Batak Vowel Sign Karo O ..Batak Vowel Sign Karo O
-        {0x1bef, 0x1bf1},  // Batak Vowel Sign U F|| S..Batak Consonant Sign H
+        {0x1bef, 0x1bf1},  // Batak Vowel Sign U For S..Batak Consonant Sign H
         {0x1c2c, 0x1c33},  // Lepcha Vowel Sign E     ..Lepcha Consonant Sign T
         {0x1c36, 0x1c37},  // Lepcha Sign Ran         ..Lepcha Sign Nukta
         {0x1cd0, 0x1cd2},  // Vedic Tone Karshana     ..Vedic Tone Prenkha
@@ -176,8 +181,8 @@ static struct width_interval ZERO_WIDTH[] = {
         {0x1ced, 0x1ced},  // Vedic Sign Tiryak       ..Vedic Sign Tiryak
         {0x1cf4, 0x1cf4},  // Vedic Tone Candra Above ..Vedic Tone Candra Above
         {0x1cf8, 0x1cf9},  // Vedic Tone Ring Above   ..Vedic Tone Double Ring A
-        {0x1dc0, 0x1df5},  // Combining Dotted Grave A..Combining Up Tack Above
-        {0x1dfb, 0x1dff},  // (nil)                   ..Combining Right Arrowhea
+        {0x1dc0, 0x1df9},  // Combining Dotted Grave A..Combining Wide Inverted
+        {0x1dfb, 0x1dff},  // Combining Deletion Mark ..Combining Right Arrowhea
         {0x20d0, 0x20f0},  // Combining Left Harpoon A..Combining Asterisk Above
         {0x2cef, 0x2cf1},  // Coptic Combining Ni Abov..Coptic Combining Spiritu
         {0x2d7f, 0x2d7f},  // Tifinagh Consonant Joine..Tifinagh Consonant Joine
@@ -192,14 +197,16 @@ static struct width_interval ZERO_WIDTH[] = {
         {0xa806, 0xa806},  // Syloti Nagri Sign Hasant..Syloti Nagri Sign Hasant
         {0xa80b, 0xa80b},  // Syloti Nagri Sign Anusva..Syloti Nagri Sign Anusva
         {0xa825, 0xa826},  // Syloti Nagri Vowel Sign ..Syloti Nagri Vowel Sign
-        {0xa8c4, 0xa8c5},  // Saurashtra Sign Virama  ..
+        {0xa82c, 0xa82c},  // (nil)                   ..
+        {0xa8c4, 0xa8c5},  // Saurashtra Sign Virama  ..Saurashtra Sign Candrabi
         {0xa8e0, 0xa8f1},  // Combining Devanagari Dig..Combining Devanagari Sig
+        {0xa8ff, 0xa8ff},  // Devanagari Vowel Sign Ay..Devanagari Vowel Sign Ay
         {0xa926, 0xa92d},  // Kayah Li Vowel Ue       ..Kayah Li Tone Calya Plop
         {0xa947, 0xa951},  // Rejang Vowel Sign I     ..Rejang Consonant Sign R
         {0xa980, 0xa982},  // Javanese Sign Panyangga ..Javanese Sign Layar
         {0xa9b3, 0xa9b3},  // Javanese Sign Cecak Telu..Javanese Sign Cecak Telu
         {0xa9b6, 0xa9b9},  // Javanese Vowel Sign Wulu..Javanese Vowel Sign Suku
-        {0xa9bc, 0xa9bc},  // Javanese Vowel Sign Pepe..Javanese Vowel Sign Pepe
+        {0xa9bc, 0xa9bd},  // Javanese Vowel Sign Pepe..Javanese Consonant Sign
         {0xa9e5, 0xa9e5},  // Myanmar Sign Shan Saw   ..Myanmar Sign Shan Saw
         {0xaa29, 0xaa2e},  // Cham Vowel Sign Aa      ..Cham Vowel Sign Oe
         {0xaa31, 0xaa32},  // Cham Vowel Sign Au      ..Cham Vowel Sign Ue
@@ -218,7 +225,7 @@ static struct width_interval ZERO_WIDTH[] = {
         {0xabe8, 0xabe8},  // Meetei Mayek Vowel Sign ..Meetei Mayek Vowel Sign
         {0xabed, 0xabed},  // Meetei Mayek Apun Iyek  ..Meetei Mayek Apun Iyek
         {0xfb1e, 0xfb1e},  // Hebrew Point Judeo-spani..Hebrew Point Judeo-spani
-        {0xfe00, 0xfe0f},  // Variation Select||-1    ..Variation Select||-16
+        {0xfe00, 0xfe0f},  // Variation Selector-1    ..Variation Selector-16
         {0xfe20, 0xfe2f},  // Combining Ligature Left ..Combining Cyrillic Titlo
         {0x101fd, 0x101fd},  // Phaistos Disc Sign Combi..Phaistos Disc Sign Combi
         {0x102e0, 0x102e0},  // Coptic Epact Thousands M..Coptic Epact Thousands M
@@ -229,6 +236,9 @@ static struct width_interval ZERO_WIDTH[] = {
         {0x10a38, 0x10a3a},  // Kharoshthi Sign Bar Abov..Kharoshthi Sign Dot Belo
         {0x10a3f, 0x10a3f},  // Kharoshthi Virama       ..Kharoshthi Virama
         {0x10ae5, 0x10ae6},  // Manichaean Abbreviation ..Manichaean Abbreviation
+        {0x10d24, 0x10d27},  // Hanifi Rohingya Sign Har..Hanifi Rohingya Sign Tas
+        {0x10eab, 0x10eac},  // (nil)                   ..
+        {0x10f46, 0x10f50},  // Sogdian Combining Dot Be..Sogdian Combining Stroke
         {0x11001, 0x11001},  // Brahmi Sign Anusvara    ..Brahmi Sign Anusvara
         {0x11038, 0x11046},  // Brahmi Vowel Sign Aa    ..Brahmi Virama
         {0x1107f, 0x11081},  // Brahmi Number Joiner    ..Kaithi Sign Anusvara
@@ -240,23 +250,25 @@ static struct width_interval ZERO_WIDTH[] = {
         {0x11173, 0x11173},  // Mahajani Sign Nukta     ..Mahajani Sign Nukta
         {0x11180, 0x11181},  // Sharada Sign Candrabindu..Sharada Sign Anusvara
         {0x111b6, 0x111be},  // Sharada Vowel Sign U    ..Sharada Vowel Sign O
-        {0x111ca, 0x111cc},  // Sharada Sign Nukta      ..Sharada Extra Sh||t Vowe
+        {0x111c9, 0x111cc},  // Sharada Sandhi Mark     ..Sharada Extra Short Vowe
+        {0x111cf, 0x111cf},  // (nil)                   ..
         {0x1122f, 0x11231},  // Khojki Vowel Sign U     ..Khojki Vowel Sign Ai
         {0x11234, 0x11234},  // Khojki Sign Anusvara    ..Khojki Sign Anusvara
         {0x11236, 0x11237},  // Khojki Sign Nukta       ..Khojki Sign Shadda
-        {0x1123e, 0x1123e},  // (nil)                   ..
+        {0x1123e, 0x1123e},  // Khojki Sign Sukun       ..Khojki Sign Sukun
         {0x112df, 0x112df},  // Khudawadi Sign Anusvara ..Khudawadi Sign Anusvara
         {0x112e3, 0x112ea},  // Khudawadi Vowel Sign U  ..Khudawadi Sign Virama
         {0x11300, 0x11301},  // Grantha Sign Combining A..Grantha Sign Candrabindu
-        {0x1133c, 0x1133c},  // Grantha Sign Nukta      ..Grantha Sign Nukta
+        {0x1133b, 0x1133c},  // Combining Bindu Below   ..Grantha Sign Nukta
         {0x11340, 0x11340},  // Grantha Vowel Sign Ii   ..Grantha Vowel Sign Ii
         {0x11366, 0x1136c},  // Combining Grantha Digit ..Combining Grantha Digit
         {0x11370, 0x11374},  // Combining Grantha Letter..Combining Grantha Letter
-        {0x11438, 0x1143f},  // (nil)                   ..
-        {0x11442, 0x11444},  // (nil)                   ..
-        {0x11446, 0x11446},  // (nil)                   ..
+        {0x11438, 0x1143f},  // Newa Vowel Sign U       ..Newa Vowel Sign Ai
+        {0x11442, 0x11444},  // Newa Sign Virama        ..Newa Sign Anusvara
+        {0x11446, 0x11446},  // Newa Sign Nukta         ..Newa Sign Nukta
+        {0x1145e, 0x1145e},  // Newa Sandhi Mark        ..Newa Sandhi Mark
         {0x114b3, 0x114b8},  // Tirhuta Vowel Sign U    ..Tirhuta Vowel Sign Vocal
-        {0x114ba, 0x114ba},  // Tirhuta Vowel Sign Sh||t..Tirhuta Vowel Sign Sh||t
+        {0x114ba, 0x114ba},  // Tirhuta Vowel Sign Short..Tirhuta Vowel Sign Short
         {0x114bf, 0x114c0},  // Tirhuta Sign Candrabindu..Tirhuta Sign Anusvara
         {0x114c2, 0x114c3},  // Tirhuta Sign Virama     ..Tirhuta Sign Nukta
         {0x115b2, 0x115b5},  // Siddham Vowel Sign U    ..Siddham Vowel Sign Vocal
@@ -273,16 +285,43 @@ static struct width_interval ZERO_WIDTH[] = {
         {0x1171d, 0x1171f},  // Ahom Consonant Sign Medi..Ahom Consonant Sign Medi
         {0x11722, 0x11725},  // Ahom Vowel Sign I       ..Ahom Vowel Sign Uu
         {0x11727, 0x1172b},  // Ahom Vowel Sign Aw      ..Ahom Sign Killer
-        {0x11c30, 0x11c36},  // (nil)                   ..
-        {0x11c38, 0x11c3d},  // (nil)                   ..
-        {0x11c3f, 0x11c3f},  // (nil)                   ..
-        {0x11c92, 0x11ca7},  // (nil)                   ..
-        {0x11caa, 0x11cb0},  // (nil)                   ..
-        {0x11cb2, 0x11cb3},  // (nil)                   ..
-        {0x11cb5, 0x11cb6},  // (nil)                   ..
+        {0x1182f, 0x11837},  // Dogra Vowel Sign U      ..Dogra Sign Anusvara
+        {0x11839, 0x1183a},  // Dogra Sign Virama       ..Dogra Sign Nukta
+        {0x1193b, 0x1193c},  // (nil)                   ..
+        {0x1193e, 0x1193e},  // (nil)                   ..
+        {0x11943, 0x11943},  // (nil)                   ..
+        {0x119d4, 0x119d7},  // (nil)                   ..
+        {0x119da, 0x119db},  // (nil)                   ..
+        {0x119e0, 0x119e0},  // (nil)                   ..
+        {0x11a01, 0x11a0a},  // Zanabazar Square Vowel S..Zanabazar Square Vowel L
+        {0x11a33, 0x11a38},  // Zanabazar Square Final C..Zanabazar Square Sign An
+        {0x11a3b, 0x11a3e},  // Zanabazar Square Cluster..Zanabazar Square Cluster
+        {0x11a47, 0x11a47},  // Zanabazar Square Subjoin..Zanabazar Square Subjoin
+        {0x11a51, 0x11a56},  // Soyombo Vowel Sign I    ..Soyombo Vowel Sign Oe
+        {0x11a59, 0x11a5b},  // Soyombo Vowel Sign Vocal..Soyombo Vowel Length Mar
+        {0x11a8a, 0x11a96},  // Soyombo Final Consonant ..Soyombo Sign Anusvara
+        {0x11a98, 0x11a99},  // Soyombo Gemination Mark ..Soyombo Subjoiner
+        {0x11c30, 0x11c36},  // Bhaiksuki Vowel Sign I  ..Bhaiksuki Vowel Sign Voc
+        {0x11c38, 0x11c3d},  // Bhaiksuki Vowel Sign E  ..Bhaiksuki Sign Anusvara
+        {0x11c3f, 0x11c3f},  // Bhaiksuki Sign Virama   ..Bhaiksuki Sign Virama
+        {0x11c92, 0x11ca7},  // Marchen Subjoined Letter..Marchen Subjoined Letter
+        {0x11caa, 0x11cb0},  // Marchen Subjoined Letter..Marchen Vowel Sign Aa
+        {0x11cb2, 0x11cb3},  // Marchen Vowel Sign U    ..Marchen Vowel Sign E
+        {0x11cb5, 0x11cb6},  // Marchen Sign Anusvara   ..Marchen Sign Candrabindu
+        {0x11d31, 0x11d36},  // Masaram Gondi Vowel Sign..Masaram Gondi Vowel Sign
+        {0x11d3a, 0x11d3a},  // Masaram Gondi Vowel Sign..Masaram Gondi Vowel Sign
+        {0x11d3c, 0x11d3d},  // Masaram Gondi Vowel Sign..Masaram Gondi Vowel Sign
+        {0x11d3f, 0x11d45},  // Masaram Gondi Vowel Sign..Masaram Gondi Virama
+        {0x11d47, 0x11d47},  // Masaram Gondi Ra-kara   ..Masaram Gondi Ra-kara
+        {0x11d90, 0x11d91},  // Gunjala Gondi Vowel Sign..Gunjala Gondi Vowel Sign
+        {0x11d95, 0x11d95},  // Gunjala Gondi Sign Anusv..Gunjala Gondi Sign Anusv
+        {0x11d97, 0x11d97},  // Gunjala Gondi Virama    ..Gunjala Gondi Virama
+        {0x11ef3, 0x11ef4},  // Makasar Vowel Sign I    ..Makasar Vowel Sign U
         {0x16af0, 0x16af4},  // Bassa Vah Combining High..Bassa Vah Combining High
         {0x16b30, 0x16b36},  // Pahawh Hmong Mark Cim Tu..Pahawh Hmong Mark Cim Ta
+        {0x16f4f, 0x16f4f},  // (nil)                   ..
         {0x16f8f, 0x16f92},  // Miao Tone Right         ..Miao Tone Below
+        {0x16fe4, 0x16fe4},  // (nil)                   ..
         {0x1bc9d, 0x1bc9e},  // Duployan Thick Letter Se..Duployan Double Mark
         {0x1d167, 0x1d169},  // Musical Symbol Combining..Musical Symbol Combining
         {0x1d17b, 0x1d182},  // Musical Symbol Combining..Musical Symbol Combining
@@ -295,18 +334,20 @@ static struct width_interval ZERO_WIDTH[] = {
         {0x1da84, 0x1da84},  // Signwriting Location Hea..Signwriting Location Hea
         {0x1da9b, 0x1da9f},  // Signwriting Fill Modifie..Signwriting Fill Modifie
         {0x1daa1, 0x1daaf},  // Signwriting Rotation Mod..Signwriting Rotation Mod
-        {0x1e000, 0x1e006},  // (nil)                   ..
-        {0x1e008, 0x1e018},  // (nil)                   ..
-        {0x1e01b, 0x1e021},  // (nil)                   ..
-        {0x1e023, 0x1e024},  // (nil)                   ..
-        {0x1e026, 0x1e02a},  // (nil)                   ..
+        {0x1e000, 0x1e006},  // Combining Glagolitic Let..Combining Glagolitic Let
+        {0x1e008, 0x1e018},  // Combining Glagolitic Let..Combining Glagolitic Let
+        {0x1e01b, 0x1e021},  // Combining Glagolitic Let..Combining Glagolitic Let
+        {0x1e023, 0x1e024},  // Combining Glagolitic Let..Combining Glagolitic Let
+        {0x1e026, 0x1e02a},  // Combining Glagolitic Let..Combining Glagolitic Let
+        {0x1e130, 0x1e136},  // (nil)                   ..
+        {0x1e2ec, 0x1e2ef},  // (nil)                   ..
         {0x1e8d0, 0x1e8d6},  // Mende Kikakui Combining ..Mende Kikakui Combining
-        {0x1e944, 0x1e94a},  // (nil)                   ..
-        {0xe0100, 0xe01ef},  // Variation Select||-17   ..Variation Select||-256
+        {0x1e944, 0x1e94a},  // Adlam Alif Lengthener   ..Adlam Nukta
+        {0xe0100, 0xe01ef},  // Variation Selector-17   ..Variation Selector-256
 };
 
 // https://github.com/jquast/wcwidth/blob/master/wcwidth/table_wide.py
-// at commit 0d7de112202cc8b2ebe9232ff4a5c954f19d561a (2016-07-02):
+// at commit 15efb1f02ba50f79f8905b9ef25fa9c50068b7b1 (2020-03-23):
 static struct width_interval WIDE_EASTASIAN[] = {
         {0x1100, 0x115f},  // Hangul Choseong Kiyeok  ..Hangul Choseong Filler
         {0x231a, 0x231b},  // Watch                   ..Hourglass
@@ -318,7 +359,7 @@ static struct width_interval WIDE_EASTASIAN[] = {
         {0x2614, 0x2615},  // Umbrella With Rain Drops..Hot Beverage
         {0x2648, 0x2653},  // Aries                   ..Pisces
         {0x267f, 0x267f},  // Wheelchair Symbol       ..Wheelchair Symbol
-        {0x2693, 0x2693},  // Anch||                  ..Anch||
+        {0x2693, 0x2693},  // Anchor                  ..Anchor
         {0x26a1, 0x26a1},  // High Voltage Sign       ..High Voltage Sign
         {0x26aa, 0x26ab},  // Medium White Circle     ..Medium Black Circle
         {0x26bd, 0x26be},  // Soccer Ball             ..Baseball
@@ -335,7 +376,7 @@ static struct width_interval WIDE_EASTASIAN[] = {
         {0x2728, 0x2728},  // Sparkles                ..Sparkles
         {0x274c, 0x274c},  // Cross Mark              ..Cross Mark
         {0x274e, 0x274e},  // Negative Squared Cross M..Negative Squared Cross M
-        {0x2753, 0x2755},  // Black Question Mark ||na..White Exclamation Mark O
+        {0x2753, 0x2755},  // Black Question Mark Orna..White Exclamation Mark O
         {0x2757, 0x2757},  // Heavy Exclamation Mark S..Heavy Exclamation Mark S
         {0x2795, 0x2797},  // Heavy Plus Sign         ..Heavy Division Sign
         {0x27b0, 0x27b0},  // Curly Loop              ..Curly Loop
@@ -350,42 +391,46 @@ static struct width_interval WIDE_EASTASIAN[] = {
         {0x3000, 0x303e},  // Ideographic Space       ..Ideographic Variation In
         {0x3041, 0x3096},  // Hiragana Letter Small A ..Hiragana Letter Small Ke
         {0x3099, 0x30ff},  // Combining Katakana-hirag..Katakana Digraph Koto
-        {0x3105, 0x312d},  // Bopomofo Letter B       ..Bopomofo Letter Ih
+        {0x3105, 0x312f},  // Bopomofo Letter B       ..Bopomofo Letter Nn
         {0x3131, 0x318e},  // Hangul Letter Kiyeok    ..Hangul Letter Araeae
-        {0x3190, 0x31ba},  // Ideographic Annotation L..Bopomofo Letter Zy
-        {0x31c0, 0x31e3},  // Cjk Stroke T            ..Cjk Stroke Q
-        {0x31f0, 0x321e},  // Katakana Letter Small Ku..Parenthesized K||ean Cha
+        {0x3190, 0x31e3},  // Ideographic Annotation L..Cjk Stroke Q
+        {0x31f0, 0x321e},  // Katakana Letter Small Ku..Parenthesized Korean Cha
         {0x3220, 0x3247},  // Parenthesized Ideograph ..Circled Ideograph Koto
-        {0x3250, 0x32fe},  // Partnership Sign        ..Circled Katakana Wo
-        {0x3300, 0x4dbf},  // Square Apaato           ..
+        {0x3250, 0x4dbf},  // Partnership Sign        ..
         {0x4e00, 0xa48c},  // Cjk Unified Ideograph-4e..Yi Syllable Yyr
         {0xa490, 0xa4c6},  // Yi Radical Qot          ..Yi Radical Ke
         {0xa960, 0xa97c},  // Hangul Choseong Tikeut-m..Hangul Choseong Ssangyeo
         {0xac00, 0xd7a3},  // Hangul Syllable Ga      ..Hangul Syllable Hih
         {0xf900, 0xfaff},  // Cjk Compatibility Ideogr..
-        {0xfe10, 0xfe19},  // Presentation F||m F|| Ve..Presentation F||m F|| Ve
-        {0xfe30, 0xfe52},  // Presentation F||m F|| Ve..Small Full Stop
+        {0xfe10, 0xfe19},  // Presentation Form For Ve..Presentation Form For Ve
+        {0xfe30, 0xfe52},  // Presentation Form For Ve..Small Full Stop
         {0xfe54, 0xfe66},  // Small Semicolon         ..Small Equals Sign
         {0xfe68, 0xfe6b},  // Small Reverse Solidus   ..Small Commercial At
         {0xff01, 0xff60},  // Fullwidth Exclamation Ma..Fullwidth Right White Pa
         {0xffe0, 0xffe6},  // Fullwidth Cent Sign     ..Fullwidth Won Sign
-        {0x16fe0, 0x16fe0},  // (nil)                   ..
-        {0x17000, 0x187ec},  // (nil)                   ..
-        {0x18800, 0x18af2},  // (nil)                   ..
-        {0x1b000, 0x1b001},  // Katakana Letter Archaic ..Hiragana Letter Archaic
+        {0x16fe0, 0x16fe4},  // Tangut Iteration Mark   ..
+        {0x16ff0, 0x16ff1},  // (nil)                   ..
+        {0x17000, 0x187f7},  // (nil)                   ..
+        {0x18800, 0x18cd5},  // Tangut Component-001    ..
+        {0x18d00, 0x18d08},  // (nil)                   ..
+        {0x1b000, 0x1b11e},  // Katakana Letter Archaic ..Hentaigana Letter N-mu-m
+        {0x1b150, 0x1b152},  // (nil)                   ..
+        {0x1b164, 0x1b167},  // (nil)                   ..
+        {0x1b170, 0x1b2fb},  // Nushu Character-1b170   ..Nushu Character-1b2fb
         {0x1f004, 0x1f004},  // Mahjong Tile Red Dragon ..Mahjong Tile Red Dragon
         {0x1f0cf, 0x1f0cf},  // Playing Card Black Joker..Playing Card Black Joker
         {0x1f18e, 0x1f18e},  // Negative Squared Ab     ..Negative Squared Ab
         {0x1f191, 0x1f19a},  // Squared Cl              ..Squared Vs
         {0x1f200, 0x1f202},  // Square Hiragana Hoka    ..Squared Katakana Sa
-        {0x1f210, 0x1f23b},  // Squared Cjk Unified Ideo..
-        {0x1f240, 0x1f248},  // T||toise Shell Bracketed..T||toise Shell Bracketed
+        {0x1f210, 0x1f23b},  // Squared Cjk Unified Ideo..Squared Cjk Unified Ideo
+        {0x1f240, 0x1f248},  // Tortoise Shell Bracketed..Tortoise Shell Bracketed
         {0x1f250, 0x1f251},  // Circled Ideograph Advant..Circled Ideograph Accept
+        {0x1f260, 0x1f265},  // Rounded Symbol For Fu   ..Rounded Symbol For Cai
         {0x1f300, 0x1f320},  // Cyclone                 ..Shooting Star
         {0x1f32d, 0x1f335},  // Hot Dog                 ..Cactus
         {0x1f337, 0x1f37c},  // Tulip                   ..Baby Bottle
-        {0x1f37e, 0x1f393},  // Bottle With Popping C||k..Graduation Cap
-        {0x1f3a0, 0x1f3ca},  // Carousel H||se          ..Swimmer
+        {0x1f37e, 0x1f393},  // Bottle With Popping Cork..Graduation Cap
+        {0x1f3a0, 0x1f3ca},  // Carousel Horse          ..Swimmer
         {0x1f3cf, 0x1f3d3},  // Cricket Bat And Ball    ..Table Tennis Paddle And
         {0x1f3e0, 0x1f3f0},  // House Building          ..European Castle
         {0x1f3f4, 0x1f3f4},  // Waving Black Flag       ..Waving Black Flag
@@ -393,25 +438,31 @@ static struct width_interval WIDE_EASTASIAN[] = {
         {0x1f440, 0x1f440},  // Eyes                    ..Eyes
         {0x1f442, 0x1f4fc},  // Ear                     ..Videocassette
         {0x1f4ff, 0x1f53d},  // Prayer Beads            ..Down-pointing Small Red
-        {0x1f54b, 0x1f54e},  // Kaaba                   ..Men||ah With Nine Branch
+        {0x1f54b, 0x1f54e},  // Kaaba                   ..Menorah With Nine Branch
         {0x1f550, 0x1f567},  // Clock Face One Oclock   ..Clock Face Twelve-thirty
-        {0x1f57a, 0x1f57a},  // (nil)                   ..
+        {0x1f57a, 0x1f57a},  // Man Dancing             ..Man Dancing
         {0x1f595, 0x1f596},  // Reversed Hand With Middl..Raised Hand With Part Be
-        {0x1f5a4, 0x1f5a4},  // (nil)                   ..
+        {0x1f5a4, 0x1f5a4},  // Black Heart             ..Black Heart
         {0x1f5fb, 0x1f64f},  // Mount Fuji              ..Person With Folded Hands
         {0x1f680, 0x1f6c5},  // Rocket                  ..Left Luggage
         {0x1f6cc, 0x1f6cc},  // Sleeping Accommodation  ..Sleeping Accommodation
-        {0x1f6d0, 0x1f6d2},  // Place Of W||ship        ..
+        {0x1f6d0, 0x1f6d2},  // Place Of Worship        ..Shopping Trolley
+        {0x1f6d5, 0x1f6d7},  // (nil)                   ..
         {0x1f6eb, 0x1f6ec},  // Airplane Departure      ..Airplane Arriving
-        {0x1f6f4, 0x1f6f6},  // (nil)                   ..
-        {0x1f910, 0x1f91e},  // Zipper-mouth Face       ..
-        {0x1f920, 0x1f927},  // (nil)                   ..
-        {0x1f930, 0x1f930},  // (nil)                   ..
-        {0x1f933, 0x1f93e},  // (nil)                   ..
-        {0x1f940, 0x1f94b},  // (nil)                   ..
-        {0x1f950, 0x1f95e},  // (nil)                   ..
-        {0x1f980, 0x1f991},  // Crab                    ..
-        {0x1f9c0, 0x1f9c0},  // Cheese Wedge            ..Cheese Wedge
+        {0x1f6f4, 0x1f6fc},  // Scooter                 ..
+        {0x1f7e0, 0x1f7eb},  // (nil)                   ..
+        {0x1f90c, 0x1f93a},  // (nil)                   ..Fencer
+        {0x1f93c, 0x1f945},  // Wrestlers               ..Goal Net
+        {0x1f947, 0x1f978},  // First Place Medal       ..
+        {0x1f97a, 0x1f9cb},  // Face With Pleading Eyes ..
+        {0x1f9cd, 0x1f9ff},  // (nil)                   ..Nazar Amulet
+        {0x1fa70, 0x1fa74},  // (nil)                   ..
+        {0x1fa78, 0x1fa7a},  // (nil)                   ..
+        {0x1fa80, 0x1fa86},  // (nil)                   ..
+        {0x1fa90, 0x1faa8},  // (nil)                   ..
+        {0x1fab0, 0x1fab6},  // (nil)                   ..
+        {0x1fac0, 0x1fac2},  // (nil)                   ..
+        {0x1fad0, 0x1fad6},  // (nil)                   ..
         {0x20000, 0x2fffd},  // Cjk Unified Ideograph-20..
         {0x30000, 0x3fffd},  // (nil)                   ..
 };
